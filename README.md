@@ -39,7 +39,26 @@ Let's make sure it works
 
 `mix test`
 
-** Note to self, possibly add Player.games & Game.players as `has_many:through`? **
+This is nice, but I want to have the associations available on my Structs.
+Updating this is pretty easy, we can just replace the foreign binary_ids with the `[has_*, belongs_*] macros.
+
+In `Scoreboard.Games.Score` Replace
+
+```elixir
+field :player_id, :binary_id
+field :game_id, :binary_id
+```
+
+With
+
+```elixir
+belongs_to(:game, Game)
+belongs_to(:player, Player)
+```
+
+I added the associations to the `Game` and `Player` schemas as well.
+
+Test again and make sure everything is still okay `mix test`
 
 
 ### Absinthe
