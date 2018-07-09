@@ -11,7 +11,6 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Scoreboard.Repo
-alias Scoreboard.Games
 alias Scoreboard.Games.{Game, Player, Score}
 
 aaron = Repo.insert!(%Player{name: "Aaron"})
