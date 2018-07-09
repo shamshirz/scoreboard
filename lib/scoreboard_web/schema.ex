@@ -1,24 +1,40 @@
 defmodule ScoreboardWeb.Schema do
   use Absinthe.Schema
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   alias Scoreboard.Games
+
+  def context(ctx) do
+    loader =
+      Dataloader.new |> Dataloader.add_source(:games, Games.data())
+
+    Map.put(ctx, :loader, loader)
+  end
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
+  end
 
   @desc "A Game"
   object :game do
     field(:id, non_null(:id))
     field(:name, non_null(:string))
+    field(:scores, list_of(:score), resolve: dataloader(:games))
   end
 
   @desc "A Player"
   object :player do
     field(:id, non_null(:id))
     field(:name, non_null(:string))
+    field(:scores, list_of(:score), resolve: dataloader(:games))
   end
 
-  # @desc "A Score."
-  # object :score do
-  #   field(:id, non_null(:id))
-  #   field(:total, non_null(:integer))
-  # end
+  @desc "A Score."
+  object :score do
+    field(:id, non_null(:id))
+    field(:total, non_null(:integer))
+    field(:player, :player, resolve: dataloader(:games))
+    field(:game, :game, resolve: dataloader(:games))
+  end
 
   query do
     field :game, :game do
