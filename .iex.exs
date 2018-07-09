@@ -13,8 +13,14 @@ defmodule DataloaderExample do
   end
 
   @doc """
-  3 different root nodes
-  expects 3 requests, but what if we use a dataloader to batch these requests?
+  The scores key will return a list of scores
+
+  ```
+  field(:scores, list_of(:score), resolve: dataloader(:games))
+  ```
+
+  We could end up with an N+1 situation resolving the 'player' for each one of those scores.
+  Luckily for us, dataloader will handle "batching" those requests using a WHERE…IN clause
   """
   def count_requests() do
     request = """
