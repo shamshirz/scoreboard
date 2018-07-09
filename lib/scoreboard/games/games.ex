@@ -8,6 +8,14 @@ defmodule Scoreboard.Games do
 
   alias Scoreboard.Games.Player
 
+  def data() do
+    Dataloader.Ecto.new(Scoreboard.Repo, query: &query/2)
+  end
+
+  def query(queryable, _params) do
+    queryable
+  end
+
   def get(queryable, id) do
     case Repo.get(queryable, id) do
       nil ->
