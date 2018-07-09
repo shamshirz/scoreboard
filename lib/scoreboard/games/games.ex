@@ -8,6 +8,16 @@ defmodule Scoreboard.Games do
 
   alias Scoreboard.Games.Player
 
+  def get(queryable, id) do
+    case Repo.get(queryable, id) do
+      nil ->
+        {:error, :not_found}
+
+      result ->
+        {:ok, result}
+    end
+  end
+
   @doc """
   Returns the list of players.
 
@@ -36,6 +46,22 @@ defmodule Scoreboard.Games do
 
   """
   def get_player!(id), do: Repo.get!(Player, id)
+
+  @doc """
+  Gets a single player.
+
+  Returns an :ok|error tuple
+
+  ## Examples
+
+      iex> get_player!(123)
+      {:ok, %Player{}}
+
+      iex> get_player!(456)
+      {:error, reason}
+
+  """
+  def get_player(id), do: get(Player, id)
 
   @doc """
   Creates a player.
@@ -132,6 +158,22 @@ defmodule Scoreboard.Games do
 
   """
   def get_game!(id), do: Repo.get!(Game, id)
+
+  @doc """
+  Gets a single game.
+
+  Returns a ok|error tuple
+
+  ## Examples
+
+      iex> get_game(123)
+      {:ok, %Game{}}
+
+      iex> get_game(456)
+      {:error, :not_found}
+
+  """
+  def get_game(id), do: get(Game, id)
 
   @doc """
   Creates a game.

@@ -1,14 +1,14 @@
 defmodule Scoreboard.Games.Score do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Scoreboard.Games.{Game, Player}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "scores" do
-    field :total, :integer
-    field :player_id, :binary_id
-    field :game_id, :binary_id
+    field(:total, :integer)
+    belongs_to(:game, Game)
+    belongs_to(:player, Player)
 
     timestamps()
   end
