@@ -12,7 +12,7 @@ defmodule Scoreboard.SchemaTest do
   end
 
   describe("top level queries") do
-    test("We can get our fake data", context) do
+    test("on data", context) do
       document = """
       {
         game(id: "#{context.game.id}") {
@@ -35,7 +35,7 @@ defmodule Scoreboard.SchemaTest do
   end
 
   describe("nested queries") do
-    test("We can query associations", context) do
+    test("on associations", context) do
       score = Repo.insert!(%Score{game_id: context.game.id, player_id: context.player.id, total: 101})
 
       document = """
