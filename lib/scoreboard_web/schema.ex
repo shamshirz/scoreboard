@@ -19,7 +19,11 @@ defmodule ScoreboardWeb.Schema do
   object :game do
     field(:id, non_null(:id))
     field(:name, non_null(:string))
-    field(:scores, list_of(:score), resolve: dataloader(:games))
+    field :scores, list_of(:score) do
+      arg :limit, :integer
+      arg :player_id, :id
+      resolve dataloader(:games)
+    end
   end
 
   @desc "A Player"

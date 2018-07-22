@@ -6,15 +6,30 @@ defmodule Scoreboard.Games do
   import Ecto.Query, warn: false
   alias Scoreboard.Repo
 
-  alias Scoreboard.Games.Player
+  alias Scoreboard.Games.{Player, Score}
 
   def data() do
     Dataloader.Ecto.new(Scoreboard.Repo, query: &query/2)
   end
 
-  def query(queryable, _params) do
-    queryable
+  @doc """
+  Pattern match to build more specific queries
+  """
+  def query(Score, params) do
+    params
+    |> Map.put_new(:limit, 10)
+    |> Map.to_list()
+    |> Enum.reduce(Score, &apply_param/2)
   end
+  def query(queryable, _params), do: queryable
+
+  @doc """
+  reduce function
+  """
+  def apply_param({:limit, num}, queryable), do: queryable |> limit(^num)
+  def apply_param({:player_id, player_id}, queryable), do: queryable |> where([score], score.player_id == ^player_id)
+  def apply_param(_param, queryable), do: queryable
+
 
   def get(queryable, id) do
     case Repo.get(queryable, id) do

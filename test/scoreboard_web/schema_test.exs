@@ -63,6 +63,55 @@ defmodule Scoreboard.SchemaTest do
       assert get_in(data, ["game", "scores", first, "total"]) == score.total
       assert get_in(data, ["game", "scores", first, "player", "name"]) == context.player.name
     end
+
+    test("passing limit param to scores query", context) do
+      Repo.insert!(%Score{game_id: context.game.id, player_id: context.player.id, total: 101})
+
+      document = """
+      {
+        game(id: "#{context.game.id}") {
+          id
+          name
+          scores(limit: 0) {
+            total
+          }
+        }
+      }
+      """
+
+      result = Absinthe.run(document, ScoreboardWeb.Schema)
+
+      assert {:ok, %{data: data}} = result
+      assert length(get_in(data, ["game", "scores"])) == 0
+    end
+
+    test("passing limit & player_id param to scores query", context) do
+      sam = Repo.insert!(%Player{name: "Sam"})
+      Repo.insert!(%Score{game_id: context.game.id, player_id: context.player.id, total: 101})
+      Repo.insert!(%Score{game_id: context.game.id, player_id: sam.id, total: 12})
+
+      document = """
+      {
+        game(id: "#{context.game.id}") {
+          id
+          name
+          scores(limit: 5, player_id: "#{context.player.id}") {
+            total
+            player {
+              id
+            }
+          }
+        }
+      }
+      """
+
+      result = Absinthe.run(document, ScoreboardWeb.Schema)
+
+      assert {:ok, %{data: data}} = result
+      for %{"player" => %{"id" => id}} = _score <- get_in(data, ["game", "scores"]) do
+        assert id == context.player.id
+      end
+    end
   end
 
   describe("mutation queries") do
