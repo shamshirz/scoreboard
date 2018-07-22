@@ -11,12 +11,18 @@ To start your Phoenix server:
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server`
-  * Hit it `um…TODO`
+  * Open graphiql to `http://localhost:4000/graphiql`
 
 
 # Write your own
 
-## Generate an App
+These are the steps that I went through building this app. They each focus on one chunk of work, but not exactly a single feature. They try to introduce libraries one at a time.
+
+Table of Contents
+
+* [link](#generate)
+
+## <a name="#generate"></a>Generate an App
 Make a basic Phoenix app to serve an API only and use UUIDs instead of int Ids.
 
 ```
@@ -201,11 +207,11 @@ http://localhost:4000/graphiql
 
  Talk resources
 
- * [Talk guidelines)](https://opensource.com/life/14/1/get-your-conference-talk-submission-accepted])
- * [Elixir Conf Proposal Form)](https://docs.google.com/forms/d/e/1FAIpQLSf4CiP2UtB7Www47yVv592w_kHK4qBwZZpQcMlaQJDvDU7qpg/viewform])
- * [Chad Fowlwer Quote)](https://twitter.com/chadfowler/status/671944358388723712])
- * [Spotify Talk Example)](https://vimeo.com/85490944])
- * [Evan on Storytelling)](https://www.deconstructconf.com/2017/evan-czaplicki-on-storytelling])
+ * [Talk guidelines](https://opensource.com/life/14/1/get-your-conference-talk-submission-accepted])
+ * [Elixir Conf Proposal Form](https://docs.google.com/forms/d/e/1FAIpQLSf4CiP2UtB7Www47yVv592w_kHK4qBwZZpQcMlaQJDvDU7qpg/viewform])
+ * [Chad Fowlwer Quote](https://twitter.com/chadfowler/status/671944358388723712])
+ * [Spotify Talk Example](https://vimeo.com/85490944])
+ * [Evan on Storytelling](https://www.deconstructconf.com/2017/evan-czaplicki-on-storytelling])
 
 
 The fun stuff
