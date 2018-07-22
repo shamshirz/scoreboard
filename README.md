@@ -124,19 +124,22 @@ test("We can query data", context) do
 end
 ```
 
-## 4. Traversing the Graph
+## Step 4 - Dataloader
 
-TO SELF - Point out verbosity and repeated simple functions of the normal ecto context & the context with Absinthe
+[Dataloader PR](https://github.com/shamshirz/scoreboard/pull/3/files)
 
-
-### Step 4 - DataLoader
-
-Point out reduced line count, show a PR maybe.
+Add the most basic implementation, reduce the length of resolvers! yay!
 
 
-### Step 5 - Mutation
+## Step 5 - Mutation
 
-Link to this PR.
+[Add our first mutation](https://github.com/shamshirz/scoreboard/pull/8)
+
+
+## Step 6 - Add Limit & filter to Scores
+
+[Add to our context's query/2](https://github.com/shamshirz/scoreboard/pull/9/files)
+
 
 ## Learn more
 
