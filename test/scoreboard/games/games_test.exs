@@ -124,15 +124,24 @@ defmodule Scoreboard.GamesTest do
   end
 
   describe "scores" do
-    alias Scoreboard.Games.Score
+    alias Scoreboard.Games.{Game, Player, Score}
 
     @valid_attrs %{total: 42}
     @update_attrs %{total: 43}
     @invalid_attrs %{total: nil}
 
+    def game_and_player() do
+      game = Repo.insert!(%Game{name: "Code Simulator '08"})
+      player = Repo.insert!(%Player{name: "Aaron"})
+      %{game: game, player: player}
+    end
+
     def score_fixture(attrs \\ %{}) do
+      %{game: game, player: player} = game_and_player()
+
       {:ok, score} =
         attrs
+        |> Map.merge(%{game_id: game.id, player_id: player.id})
         |> Enum.into(@valid_attrs)
         |> Games.create_score()
 
@@ -150,7 +159,9 @@ defmodule Scoreboard.GamesTest do
     end
 
     test "create_score/1 with valid data creates a score" do
-      assert {:ok, %Score{} = score} = Games.create_score(@valid_attrs)
+      %{game: game, player: player} = game_and_player()
+
+      assert {:ok, %Score{} = score} = Games.create_score(@valid_attrs |> Map.merge(%{game_id: game.id, player_id: player.id}))
       assert score.total == 42
     end
 
