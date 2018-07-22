@@ -9,7 +9,7 @@ Browser games and leaderboards. You play them, you love them, let's make a serve
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+  * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server`
   * Hit it `um…TODO`
 
@@ -133,6 +133,10 @@ TO SELF - Point out verbosity and repeated simple functions of the normal ecto c
 
 Point out reduced line count, show a PR maybe.
 
+
+### Step 5 - Mutation
+
+Link to this PR.
 
 ## Learn more
 

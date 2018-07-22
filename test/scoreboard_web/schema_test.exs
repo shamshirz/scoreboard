@@ -64,4 +64,31 @@ defmodule Scoreboard.SchemaTest do
       assert get_in(data, ["game", "scores", first, "player", "name"]) == context.player.name
     end
   end
+
+  describe("mutation queries") do
+    test("create score", context) do
+      score = 37
+      document = """
+      mutation {
+        submitScore(player_id: "#{context.player.id}", game_id: "#{context.game.id}", total: #{score}) {
+          id
+          total
+          player {
+            name
+          }
+          game {
+            name
+          }
+        }
+      }
+      """
+
+      result = Absinthe.run(document, ScoreboardWeb.Schema)
+
+      assert {:ok, %{data: data}} = result
+      assert get_in(data, ["submitScore", "game", "name"]) == context.game.name
+      assert get_in(data, ["submitScore", "player", "name"]) == context.player.name
+      assert get_in(data, ["submitScore", "total"]) == score
+    end
+  end
 end
