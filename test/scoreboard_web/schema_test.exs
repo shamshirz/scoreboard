@@ -1,4 +1,4 @@
-defmodule Scoreboard.SchemaTest do
+defmodule ScoreboardWeb.SchemaTest do
   use Scoreboard.DataCase
 
   alias Scoreboard.Games.{Game, Player, Score}
@@ -36,7 +36,8 @@ defmodule Scoreboard.SchemaTest do
 
   describe("nested queries") do
     test("on associations", context) do
-      score = Repo.insert!(%Score{game_id: context.game.id, player_id: context.player.id, total: 101})
+      score =
+        Repo.insert!(%Score{game_id: context.game.id, player_id: context.player.id, total: 101})
 
       document = """
       {
@@ -108,6 +109,7 @@ defmodule Scoreboard.SchemaTest do
       result = Absinthe.run(document, ScoreboardWeb.Schema)
 
       assert {:ok, %{data: data}} = result
+
       for %{"player" => %{"id" => id}} = _score <- get_in(data, ["game", "scores"]) do
         assert id == context.player.id
       end
@@ -115,11 +117,12 @@ defmodule Scoreboard.SchemaTest do
   end
 
   describe("mutation queries") do
-    test("create score", context) do
+    test("create score", %{game: game, player: player}) do
       score = 37
+
       document = """
       mutation {
-        submitScore(player_id: "#{context.player.id}", game_id: "#{context.game.id}", total: #{score}) {
+        submitScore(player_id:"#{player.id}", game_id:"#{game.id}", total:#{score}) {
           id
           total
           player {
@@ -135,8 +138,8 @@ defmodule Scoreboard.SchemaTest do
       result = Absinthe.run(document, ScoreboardWeb.Schema)
 
       assert {:ok, %{data: data}} = result
-      assert get_in(data, ["submitScore", "game", "name"]) == context.game.name
-      assert get_in(data, ["submitScore", "player", "name"]) == context.player.name
+      assert get_in(data, ["submitScore", "game", "name"]) == game.name
+      assert get_in(data, ["submitScore", "player", "name"]) == player.name
       assert get_in(data, ["submitScore", "total"]) == score
     end
   end

@@ -160,8 +160,10 @@ defmodule Scoreboard.GamesTest do
 
     test "create_score/1 with valid data creates a score" do
       %{game: game, player: player} = game_and_player()
+      attrs = @valid_attrs |> Map.merge(%{game_id: game.id, player_id: player.id})
 
-      assert {:ok, %Score{} = score} = Games.create_score(@valid_attrs |> Map.merge(%{game_id: game.id, player_id: player.id}))
+      assert {:ok, %Score{} = score} = Games.create_score(attrs)
+
       assert score.total == 42
     end
 

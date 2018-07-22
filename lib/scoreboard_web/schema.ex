@@ -5,8 +5,7 @@ defmodule ScoreboardWeb.Schema do
   alias ScoreboardWeb.Resolvers
 
   def context(ctx) do
-    loader =
-      Dataloader.new |> Dataloader.add_source(:games, Games.data())
+    loader = Dataloader.new() |> Dataloader.add_source(:games, Games.data())
 
     Map.put(ctx, :loader, loader)
   end
@@ -19,10 +18,11 @@ defmodule ScoreboardWeb.Schema do
   object :game do
     field(:id, non_null(:id))
     field(:name, non_null(:string))
+
     field :scores, list_of(:score) do
-      arg :limit, :integer
-      arg :player_id, :id
-      resolve dataloader(:games)
+      arg(:limit, :integer)
+      arg(:player_id, :id)
+      resolve(dataloader(:games))
     end
   end
 

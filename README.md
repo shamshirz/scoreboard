@@ -72,7 +72,7 @@ Test again and make sure everything is still okay
 
 ## 3. Absinthe Setup
 
-### [See how I did it in this commit](https://github.com/shamshirz/scoreboard/commit/8e1f71775da8c6ebd5b0b4b465360e31bd4b9c8a#diff-96d99c98494cf91779455a82a37c4d61)
+[See the diff in this PR](https://github.com/shamshirz/scoreboard/pull/1)
 
 Your API will revolve around your Absinthe Schema. To get this started we will define some types, eerily similary to Ecto.
 
@@ -124,22 +124,89 @@ test("We can query data", context) do
 end
 ```
 
-## Step 4 - Dataloader
+## Dataloader
+
+Dataloader takes care of batching our queries for us. It dramatically reduces code length and complexity too.
 
 [Dataloader PR](https://github.com/shamshirz/scoreboard/pull/3/files)
 
-Add the most basic implementation, reduce the length of resolvers! yay!
 
+## Mutate Data
 
-## Step 5 - Mutation
+When we change data via Absinthe, these are called Mutations. Much like the "root query", we have a "root mutation". After the mutation, you can explore the graph and resolve the same way we do in queries.
 
 [Add our first mutation](https://github.com/shamshirz/scoreboard/pull/8)
 
+```elixir
+mutation do
+  @desc "Submit a score"
+  field :submit_score, type: :score do
+    arg(:game_id, non_null(:id))
+    arg(:player_id, non_null(:id))
+    arg(:total, non_null(:integer))
 
-## Step 6 - Add Limit & filter to Scores
+    resolve(&Resolvers.Games.submit_score/2)
+  end
+end
+```
 
-[Add to our context's query/2](https://github.com/shamshirz/scoreboard/pull/9/files)
 
+## Limit & filter Scores
+
+Allow optional args on the `scores` key of our `game` type.
+
+```elixir
+field :scores, list_of(:score) do
+  arg(:limit, :integer)
+  arg(:player_id, :id)
+  resolve(dataloader(:games))
+end
+```
+
+And update `Scoreboard.Games.query/2` to handle params
+
+```elixir
+def query(Score, params) do
+  params
+  |> Map.to_list()
+  |> Enum.reduce(Score, &apply_param/2)
+end
+
+def apply_param({:limit, num}, queryable), do: queryable |> limit(^num)
+```
+
+[Games.query/2 PR here](https://github.com/shamshirz/scoreboard/pull/9/files)
+
+
+## Phoenix Routing & Graphiql
+
+Now that we can provide something useful, let's try and running the server. We just need to add a route that goes to our Absinthe schema.
+
+[Phoenix Route PR](https://github.com/shamshirz/scoreboard/pull/9)
+
+`ScoreboardWeb.Router`
+```elixir
+forward(
+    "/graphiql",
+    Absinthe.Plug.GraphiQL,
+    schema: ScoreboardWeb.Schema,
+    interface: :simple
+  )
+
+forward("/api", Absinthe.Plug, schema: ScoreboardWeb.Schema)
+```
+
+Once the router is updated we can explore our absinthe schema using [Graphiql](https://github.com/graphql/graphiql). It's a UI tool that you can view schemas and write queries with. There are download docs in the repo, but I installed it through `brew`.
+
+Start the Server
+```bash
+mix phx.server
+```
+
+Open Graphiql and go to our endpoint
+```
+http://localhost:4000/graphiql
+```
 
 ## Learn more
 
