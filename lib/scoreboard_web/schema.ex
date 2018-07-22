@@ -2,6 +2,7 @@ defmodule ScoreboardWeb.Schema do
   use Absinthe.Schema
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   alias Scoreboard.Games
+  alias ScoreboardWeb.Resolvers
 
   def context(ctx) do
     loader =
@@ -51,6 +52,17 @@ defmodule ScoreboardWeb.Schema do
       resolve(fn %{id: player_id}, _ ->
         Games.get_player(player_id)
       end)
+    end
+  end
+
+  mutation do
+    @desc "Submit a score"
+    field :submit_score, type: :score do
+      arg(:game_id, non_null(:id))
+      arg(:player_id, non_null(:id))
+      arg(:total, non_null(:integer))
+
+      resolve(&Resolvers.Games.submit_score/2)
     end
   end
 end

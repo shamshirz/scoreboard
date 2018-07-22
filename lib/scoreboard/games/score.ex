@@ -16,7 +16,7 @@ defmodule Scoreboard.Games.Score do
   @doc false
   def changeset(score, attrs) do
     score
-    |> cast(attrs, [:total])
-    |> validate_required([:total])
+    |> cast(attrs, [:total, :player_id, :game_id])
+    |> validate_required([:total, :player_id, :game_id])
   end
 end
