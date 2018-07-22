@@ -5,7 +5,12 @@ defmodule ScoreboardWeb.Router do
     plug(:accepts, ["json"])
   end
 
-  scope "/api", ScoreboardWeb do
-    pipe_through(:api)
-  end
+  forward(
+    "/graphiql",
+    Absinthe.Plug.GraphiQL,
+    schema: ScoreboardWeb.Schema,
+    interface: :simple
+  )
+
+  forward("/api", Absinthe.Plug, schema: ScoreboardWeb.Schema)
 end
