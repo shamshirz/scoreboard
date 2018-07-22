@@ -16,7 +16,7 @@ To start your Phoenix server:
 
 # Write your own
 
-## 1. Phoenix
+## Generate an App
 Make a basic Phoenix app to serve an API only and use UUIDs instead of int Ids.
 
 ```
@@ -30,21 +30,27 @@ More info.
 
 
 
-## 2. Ecto Schemas
+## Ecto Schemas
+
 We will auto generate a context to access these Ecto Schemas
-> `mix help phx.gen.context`
+```bash
+mix help phx.gen.context
+```
 
 `Player` and `Game` are many to many, using the `Score` to map them together.
 
 ```
 mix phx.gen.context Games Player players name:string
 mix phx.gen.context Games Game games name:string
+
 mix phx.gen.context Games Score scores total:integer player_id:references:players game_id:references:games
 ```
 
 Let's make sure it works
 
-> `mix test`
+```bash
+mix test
+```
 
 This is nice, but I want to have the associations available on my Structs.
 Updating this is pretty easy, we can just replace the foreign binary_ids with the `[has_*, belongs_*]` macros.
@@ -65,16 +71,11 @@ belongs_to(:player, Player)
 
 I added the associations to the [Game and Player Schemas](https://github.com/shamshirz/scoreboard/commit/0d403a75d6fdeb06a572c2f2e9a400ac1244db66#diff-1c331c359bcb59c0a55389158b9e40fb) schemas as well.
 
-Test again and make sure everything is still okay
-
-> `mix test`
-
-
-## 3. Absinthe Setup
+## Absinthe Setup
 
 [See the diff in this PR](https://github.com/shamshirz/scoreboard/pull/1)
 
-Your API will revolve around your Absinthe Schema. To get this started we will define some types, eerily similary to Ecto.
+Your API will revolve around your Absinthe `Schema`. To get this started we will define some types, eerily similary to Ecto.
 
 The Game Type
 ```
@@ -101,28 +102,7 @@ query do
   end
 end
 ```
-
-### Test it!
-
-```
-test("We can query data", context) do
-  game = Repo.insert!(%Game{name: "Code Simulator '08"})
-
-  document = """
-  {
-    game(id: "#{game.id}") {
-      id
-      name
-    }
-  }
-  """
-
-  result = Absinthe.run(document, ScoreboardWeb.Schema)
-
-  assert {:ok, %{data: data}} = result
-  assert get_in(data, ["game", "name"]) == game.name
-end
-```
+There are some informative tests [Here](https://github.com/shamshirz/scoreboard/pull/1).
 
 ## Dataloader
 
