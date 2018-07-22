@@ -20,9 +20,15 @@ These are the steps that I went through building this app. They each focus on on
 
 Table of Contents
 
-* [link](#generate)
+* [Generate an App](#generate-an-app)
+* [Ecto Schemas](#ecto-schemas)
+* [Absinthe Setup](#absinthe-setup)
+* [Dataloader](#dataloader)
+* [Mutations](#mutations)
+* [Limit & filter Scores](#limit--filter-scores)
+* [Phoenix Routing & Graphiql](#phoenix-routing--graphiql)
 
-## <a name="#generate"></a>Generate an App
+## Generate an App
 Make a basic Phoenix app to serve an API only and use UUIDs instead of int Ids.
 
 ```
@@ -117,7 +123,7 @@ Dataloader takes care of batching our queries for us. It dramatically reduces co
 [Dataloader PR](https://github.com/shamshirz/scoreboard/pull/3/files)
 
 
-## Mutate Data
+## Mutations
 
 When we change data via Absinthe, these are called Mutations. Much like the "root query", we have a "root mutation". After the mutation, you can explore the graph and resolve the same way we do in queries.
 
@@ -194,10 +200,7 @@ Open Graphiql and go to our endpoint
 http://localhost:4000/graphiql
 ```
 
-## Learn more
-
- Add my own deets here
-
+# Learn more
 
  Code specific resources
 
@@ -216,3 +219,4 @@ http://localhost:4000/graphiql
 
 The fun stuff
  * [ Absinthe Subscriptions With Annkissam ](https://www.annkissam.com/elixir/alembic/posts/2018/07/13/graphql-subscriptions-connecting-phoenix-applications-with-absinthe-and-websockets.html#an-elixir-graphql-client)
+ * [ Subscription Guide ](https://hexdocs.pm/absinthe/subscriptions.html)
