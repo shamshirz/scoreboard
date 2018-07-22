@@ -39,6 +39,7 @@ defmodule Scoreboard.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:absinthe, "~> 1.4"},
+      {:absinthe_plug, "~> 1.4"},
       {:cowboy, "~> 1.0"},
       {:dataloader, "~> 1.0.0"}
     ]
