@@ -42,31 +42,60 @@ defmodule DataloaderExample do
 
     Absinthe.run(request, ScoreboardWeb.Schema)
   end
+end
 
+defmodule LetMeSee do
+  alias Scoreboard.Repo
+  alias Scoreboard.Games.Game
 
-  # Example code from the website!
-  # TODO - show this in a slide
-  # source = Dataloader.Ecto.new(MyApp.Repo)
+  def setup() do
+    # 46365fbc-8c75-4f06-af93-183aa7771fa9
+    Repo.one(Game |> Ecto.Query.first()).id
+  end
 
-  # # setup the loader
-  # loader = Dataloader.new |> Dataloader.add_source(:db, source)
+  def a_game(id) do
+    request = """
+    {
+      game(id: "#{id}") {
+        id
+        name
+      }
+    }
+    """
 
-  # # load some things
-  # loader =
-  #   loader
-  #   |> Dataloader.load(:db, Organization, 1)
-  #   |> Dataloader.load_many(:db, Organization, [4, 9])
+    IO.puts("The Request:")
+    IO.puts(request)
 
-  # # actually retrieve them
-  # loader = Dataloader.run(loader)
+    result = Absinthe.run(request, ScoreboardWeb.Schema)
 
-  # # Now we can get whatever values out we want
-  # organizations = Dataloader.get_many(loader, :db, Organization, [1,4])
+    IO.puts("\nThe Result:")
+    result
+  end
 
+  def some_scores(id) do
+    request = """
+    {
+      game(id: "#{id}") {
+        id
+        name
+        scores {
+          id
+          total
+          player {
+            id
+            name
+          }
+        }
+      }
+    }
+    """
 
-  # Demo?
-  # > iex -S mix
-  # DataloaderExample.count_requests()
-  # Show number of requests, look at how it automatically batches the player requests
+    IO.puts("The Request:")
+    IO.puts(request)
 
+    {:ok, result} = Absinthe.run(request, ScoreboardWeb.Schema)
+
+    IO.puts("\nThe Result:")
+    result.data
+  end
 end
