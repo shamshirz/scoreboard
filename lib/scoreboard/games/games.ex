@@ -18,6 +18,7 @@ defmodule Scoreboard.Games do
   def query(Score, params) do
     params
     |> Map.put_new(:limit, 10)
+    |> Map.put_new(:order, :total)
     |> Map.to_list()
     |> Enum.reduce(Score, &apply_param/2)
   end
@@ -28,9 +29,10 @@ defmodule Scoreboard.Games do
   reduce function
   """
   def apply_param({:limit, num}, queryable), do: queryable |> limit(^num)
+  def apply_param({:order, field}, queryable), do: queryable |> order_by(desc: ^field)
 
   def apply_param({:player_id, player_id}, queryable),
-    do: queryable |> where([score], score.player_id == ^player_id)
+    do: queryable |> where(player_id: ^player_id)
 
   def apply_param(_param, queryable), do: queryable
 
