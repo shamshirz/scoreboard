@@ -38,6 +38,7 @@ defmodule ScoreboardWeb.Schema do
     field(:id, non_null(:id))
     field(:total, non_null(:integer))
     field(:player, :player, resolve: dataloader(:games))
+    # field(:player, :player, resolve: fn source, _, _ -> Games.get_player(source.player_id) end)
     field(:game, :game, resolve: dataloader(:games))
   end
 

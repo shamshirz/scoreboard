@@ -17,13 +17,20 @@ aaron = Repo.insert!(%Player{name: "Aaron"})
 sam = Repo.insert!(%Player{name: "Sam"})
 rj = Repo.insert!(%Player{name: "rj"})
 
-code_simulator = Repo.insert!(%Game{name: "Code Simulator '08"})
-risk = Repo.insert!(%Game{name: "Risk"})
+sv_2 = Repo.insert!(%Game{name: "SuperVirus2"})
+tmm = Repo.insert!(%Game{name: "Trump Money Maker"})
 
-Repo.insert!(%Score{game_id: code_simulator.id, player_id: aaron.id, total: 101})
-Repo.insert!(%Score{game_id: code_simulator.id, player_id: sam.id, total: 50})
-Repo.insert!(%Score{game_id: code_simulator.id, player_id: rj.id, total: 35})
+players = [aaron, sam, rj]
 
-Repo.insert!(%Score{game_id: risk.id, player_id: aaron.id, total: 2})
-Repo.insert!(%Score{game_id: risk.id, player_id: sam.id, total: 8})
-Repo.insert!(%Score{game_id: risk.id, player_id: rj.id, total: 13})
+scores =
+  for _ <- 1..30 do
+    data = %{
+      game_id: sv_2.id,
+      player_id: Enum.random(players).id,
+      total: :rand.uniform(100),
+      inserted_at: DateTime.utc_now(),
+      updated_at: DateTime.utc_now()
+    }
+  end
+
+Repo.insert_all(Score, scores)
