@@ -207,6 +207,12 @@ heroku config:set x="y" # Set env Vars for runtime (not compile-time)
 git push heroku master # Deploy
 heroku open graphiql #Open browser to app graphiql interface!
 heroku run "POOL_SIZE=2 mix hello.task" #Run a mix task, & limit db connections
+
+# Postgres stuff
+heroku pg:info # get db_name from add-on field.
+heroku pg:reset DB_NAME # Didn't need
+heroku run MIX_ENV=prod mix ecto.migrate
+heroku run MIX_ENV=prod mix run priv/repo/seeds.exs
 ```
 # Learn more
 
