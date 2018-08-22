@@ -200,6 +200,14 @@ Open Graphiql and go to our endpoint
 http://localhost:4000/graphiql
 ```
 
+# Heroku
+
+```bash
+heroku config:set x="y" # Set env Vars for runtime (not compile-time)
+git push heroku master # Deploy
+heroku open graphiql #Open browser to app graphiql interface!
+heroku run "POOL_SIZE=2 mix hello.task" #Run a mix task, & limit db connections
+```
 # Learn more
 
  Code specific resources

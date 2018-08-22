@@ -57,6 +57,10 @@ defmodule ScoreboardWeb.Schema do
         Games.get_player(player_id)
       end)
     end
+
+    field :games, list_of(:game) do
+      resolve(fn _, _ -> {:ok, Games.get_games()} end)
+    end
   end
 
   mutation do
