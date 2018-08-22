@@ -203,6 +203,12 @@ defmodule Scoreboard.Games do
   """
   def get_game(id), do: get(Game, id)
 
+  def get_games() do
+    Game
+    |> limit(10)
+    |> Repo.all()
+  end
+
   @doc """
   Creates a game.
 

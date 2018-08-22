@@ -32,6 +32,25 @@ defmodule ScoreboardWeb.SchemaTest do
       assert get_in(data, ["game", "name"]) == context.game.name
       assert get_in(data, ["player", "name"]) == context.player.name
     end
+
+    test("many games", context) do
+      document = """
+      {
+        games {
+          id
+          name
+        }
+      }
+      """
+
+      result = Absinthe.run(document, ScoreboardWeb.Schema)
+
+      assert {:ok, %{data: data}} = result
+      assert length(data["games"]) < 10
+      first = hd(data["games"])
+      refute is_nil(first["name"])
+      refute is_nil(first["id"])
+    end
   end
 
   describe("nested queries") do
