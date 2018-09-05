@@ -5,6 +5,8 @@
 * [Live GraphiQL Example](https://damp-beach-31852.herokuapp.com/)
 * [2upervirus: Supervirus 2 Beta](https://aaronvotre.com)
 * [SylverStudios Games](https://sylverstud.io/s)
+* [Conf Bio](https://elixirconf.com/2018/speakers/aaron-votre)
+* [Slides](https://docs.google.com/presentation/d/1tvKx9Gj6k5i51-v41fmQ2Go4iZXHDuPAI3eyJpCEX3E/edit?usp=sharing)
 
 The goal of this repo is to be a robust example of [Absinthe](https://github.com/absinthe-graphql/absinthe) and [Dataloder](https://github.com/absinthe-graphql/dataloader) to supplement a getting started guide.
 
