@@ -1,5 +1,11 @@
 # Scoreboard
 
+## Talk links
+
+* [Live GraphiQL Example](https://damp-beach-31852.herokuapp.com/)
+* [2upervirus: Supervirus 2 Beta](https://aaronvotre.com)
+* [SylverStudios Games](https://sylverstud.io/s)
+
 The goal of this repo is to be a robust example of [Absinthe](https://github.com/absinthe-graphql/absinthe) and [Dataloder](https://github.com/absinthe-graphql/dataloader) to supplement a getting started guide.
 
 Browser games and leaderboards. You play them, you love them, let's make a server to store some of those scores so you can provide persistence for your players.
@@ -11,7 +17,7 @@ To start your Phoenix server:
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server`
-  * Open graphiql to `http://localhost:4000/graphiql`
+  * Open graphiql to `http://localhost:4000/`
 
 
 # Write your own
@@ -179,7 +185,7 @@ Now that we can provide something useful, let's try and running the server. We j
 `ScoreboardWeb.Router`
 ```elixir
 forward(
-    "/graphiql",
+    "/",
     Absinthe.Plug.GraphiQL,
     schema: ScoreboardWeb.Schema,
     interface: :simple
@@ -195,17 +201,14 @@ Start the Server
 mix phx.server
 ```
 
-Open Graphiql and go to our endpoint
-```
-http://localhost:4000/graphiql
-```
+[Open Graphiql locally](http://localhost:4000/)
 
 # Heroku
 
 ```bash
 heroku config:set x="y" # Set env Vars for runtime (not compile-time)
 git push heroku master # Deploy
-heroku open graphiql #Open browser to app graphiql interface!
+heroku open #Open browser to app graphiql interface!
 heroku run "POOL_SIZE=2 mix hello.task" #Run a mix task, & limit db connections
 
 # Postgres stuff
