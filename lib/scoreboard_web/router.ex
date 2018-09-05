@@ -6,7 +6,7 @@ defmodule ScoreboardWeb.Router do
   end
 
   forward(
-    "/graphiql",
+    "/",
     Absinthe.Plug.GraphiQL,
     schema: ScoreboardWeb.Schema,
     interface: :simple
