@@ -32,7 +32,9 @@ defmodule ScoreboardWeb.Endpoint do
 
   plug(Plug.MethodOverride)
   plug(Plug.Head)
-  plug(CORSPlug, origin: ["https://aaronvotre.com/"])
+
+  # Origins in config
+  plug(CORSPlug)
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.

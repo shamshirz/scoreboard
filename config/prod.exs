@@ -15,3 +15,8 @@ config :scoreboard, Scoreboard.Repo,
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+config :cors_plug,
+  origin: ["https://aaronvotre.com/", "https://sylverstudios.dev/"],
+  max_age: 86400,
+  methods: ["GET", "POST"]
