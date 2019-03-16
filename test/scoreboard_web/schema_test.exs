@@ -33,7 +33,7 @@ defmodule ScoreboardWeb.SchemaTest do
       assert get_in(data, ["player", "name"]) == context.player.name
     end
 
-    test("many games", context) do
+    test("many games", _context) do
       document = """
       {
         games {
