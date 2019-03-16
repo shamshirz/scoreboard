@@ -195,4 +195,21 @@ defmodule Scoreboard.GamesTest do
       assert %Ecto.Changeset{} = Games.change_score(score)
     end
   end
+
+  describe "multi functions" do
+    alias Scoreboard.Games.{Game, Player, Score}
+
+    @attrs %{total: 42, game_id: "", name: "Aaron"}
+
+    def game(), do: Repo.insert!(%Game{name: "Code Simulator '08"})
+
+    test "create_score_and_player/1 returns a score" do
+      game = game()
+      args = Map.merge(@attrs, %{game_id: game.id})
+
+      assert {:ok, score} = Games.create_score_and_player(args)
+      assert Repo.preload(score, :player).player.name == "Aaron"
+    end
+  end
+
 end

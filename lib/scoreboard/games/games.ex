@@ -4,13 +4,12 @@ defmodule Scoreboard.Games do
   """
 
   import Ecto.Query, warn: false
-  alias Scoreboard.Repo
-
   alias Scoreboard.Games.{Player, Score}
+  alias Scoreboard.Repo
+  alias Ecto.Multi
 
-  def data() do
-    Dataloader.Ecto.new(Scoreboard.Repo, query: &query/2)
-  end
+
+  def data(), do: Dataloader.Ecto.new(Scoreboard.Repo, query: &query/2)
 
   @doc """
   Pattern match to build more specific queries
@@ -321,6 +320,24 @@ defmodule Scoreboard.Games do
     %Score{}
     |> Score.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  Create a score and new user
+  """
+  @spec create_score_and_player(%{name: String.t(), total: integer(), game_id: String.t()}) :: {:ok, %Score{}} | {:error, Ecto.Changeset.t()}
+  def create_score_and_player(args) do
+    Multi.new()
+    |> Multi.insert(:player, Player.changeset(%Player{}, %{name: args.name}))
+    |> Multi.insert(:score, fn %{player: player} -> Score.changeset(%Score{player_id: player.id}, args) end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{score: score}} ->
+        {:ok, score}
+
+      {:error, _, changeset, _} ->
+        {:error, changeset}
+    end
   end
 
   @doc """

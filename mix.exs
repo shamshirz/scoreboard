@@ -5,7 +5,7 @@ defmodule Scoreboard.Mixfile do
     [
       app: :scoreboard,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -33,16 +33,20 @@ defmodule Scoreboard.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:cors_plug, "~> 1.5"},
-      {:phoenix, "~> 1.3.2"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
-      {:postgrex, ">= 0.0.0"},
-      {:gettext, "~> 0.11"},
       {:absinthe, "~> 1.4"},
       {:absinthe_plug, "~> 1.4"},
-      {:cowboy, "~> 1.0"},
-      {:dataloader, "~> 1.0.0"}
+      {:cors_plug, "~> 2.0"},
+      {:dataloader, "~> 1.0.0"},
+      {:ecto, "~> 3.0", override: true},
+      {:ecto_sql, "~> 3.0"},
+      {:gettext, "~> 0.11"},
+      {:phoenix, "~> 1.4.0"},
+      {:phoenix_ecto, "~> 4.0"},
+      {:phoenix_pubsub, "~> 1.0"},
+      {:plug, "~> 1.7"},
+      {:plug_cowboy, "~> 2.0"},
+      {:poison, "~> 3.1"},
+      {:postgrex, "~> 0.14.1"}
     ]
   end
 

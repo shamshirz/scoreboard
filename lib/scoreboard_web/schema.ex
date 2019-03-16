@@ -72,5 +72,14 @@ defmodule ScoreboardWeb.Schema do
 
       resolve(&Resolvers.Games.submit_score/2)
     end
+
+    @desc "Submit a score for new player"
+    field :submit, type: :score do
+      arg(:game_id, non_null(:id))
+      arg(:name, non_null(:string))
+      arg(:total, non_null(:integer))
+
+      resolve(&Resolvers.Games.submit_score/2)
+    end
   end
 end

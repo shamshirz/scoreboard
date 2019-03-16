@@ -11,7 +11,6 @@ config :logger, level: :warn
 
 # Configure your database
 config :scoreboard, Scoreboard.Repo,
-  adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
   database: "scoreboard_test",
