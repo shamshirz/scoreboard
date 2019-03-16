@@ -36,7 +36,6 @@ defmodule Scoreboard.Mixfile do
       {:absinthe, "~> 1.4"},
       {:absinthe_plug, "~> 1.4"},
       {:cors_plug, "~> 2.0"},
-      {:cowboy, "~> 1.0"},
       {:dataloader, "~> 1.0.0"},
       {:ecto, "~> 3.0", override: true},
       {:ecto_sql, "~> 3.0"},
@@ -44,6 +43,8 @@ defmodule Scoreboard.Mixfile do
       {:phoenix, "~> 1.4.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_pubsub, "~> 1.0"},
+      {:plug, "~> 1.7"},
+      {:plug_cowboy, "~> 2.0"},
       {:poison, "~> 3.1"},
       {:postgrex, "~> 0.14.1"}
     ]

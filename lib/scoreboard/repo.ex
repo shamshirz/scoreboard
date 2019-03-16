@@ -1,5 +1,7 @@
 defmodule Scoreboard.Repo do
-  use Ecto.Repo, otp_app: :scoreboard
+  use Ecto.Repo,
+    otp_app: :scoreboard,
+    adapter: Ecto.Adapters.Postgres
 
   @doc """
   Dynamically loads the repository url from the
