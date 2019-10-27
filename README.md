@@ -1,3 +1,5 @@
+![](https://github.com/shamshirz/scoreboard/workflows/test/badge.svg)
+
 # Scoreboard
 
 ## Talk links
