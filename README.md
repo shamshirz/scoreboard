@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/shamshirz/scoreboard/workflows/test/badge.svg)](https://github.com/shamshirz/scoreboard/actions)
+
 # Scoreboard
 
 ## Talk links
