@@ -1,4 +1,4 @@
-![](https://github.com/shamshirz/scoreboard/workflows/test/badge.svg)
+![](https://github.com/shamshirz/scoreboard/workflows/Tests/badge.svg)
 
 # Scoreboard
 
